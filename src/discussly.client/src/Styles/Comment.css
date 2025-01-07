@@ -1,0 +1,84 @@
+.comment {
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 800px;
+}
+
+.comment-content {
+    gap: 12px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-header {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    display: flex;
+}
+
+.comment-header__info-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid white;
+    object-fit: cover;
+}
+
+.author-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.timestamp {
+    color: black;
+    font-size: 0.9em;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 12px;
+    color: blue;
+}
+
+.comment-quote {
+    margin: 12px 0;
+    padding-left: 12px;
+    border-left: 2px solid #ddd;
+    color: #666;
+    font-size: 0.95em;
+}
+
+.comment-text {
+    padding: 0px 10px;
+    background-color: white;
+    word-break: break-all;
+}
+
+.comment-container, .child-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

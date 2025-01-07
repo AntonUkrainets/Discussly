@@ -1,0 +1,131 @@
+version: '3.8'
+
+services:
+  react:
+    container_name: react
+    build:
+      context: ${REACT_BUILD_CONTEXT}
+      dockerfile: ${REACT_DOCKERFILE}
+    restart: always
+    ports:
+      - "0.0.0.0:${REACT_PORT}:${REACT_PORT}"
+    environment:
+      - PORT=${REACT_PORT}
+      - VITE_API_URL=http://server:${SERVER_PORT}
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
+  server:
+    container_name: server
+    build:
+      context: ${SERVER_BUILD_CONTEXT}
+      dockerfile: ${SERVER_DOCKERFILE}
+    restart: always
+    ports:
+      - "0.0.0.0:${SERVER_PORT}:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PORT=${RABBITMQ_PORT}
+      - MSSQL_HOST=${MSSQL_HOST}
+      - MSSQL_PORT=${MSSQL_PORT}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT}
+      - ConnectionStrings__DiscusslyDbContext=${DB_CONNECTION_STRING}
+      - Elasticsearch__Uri=${ELASTIC_URI}
+      - AzureBlobStorage__ConnectionString=${BLOB_STORAGE_CONNECTION_STRING}
+      - Redis__ConnectionString=${REDIS_CONNECTION_STRING}
+      - Rabbit__ConnectionString=${RABBIT_CONNECTION_STRING}
+    depends_on:
+      - rabbitmq
+      - mssql
+      - elasticsearch
+      - redis
+    networks:
+      - app_network
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:management
+    restart: always
+    ports:
+      - "${RABBITMQ_PORT}:${RABBITMQ_PORT}"
+      - "${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - app_network
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    ports:
+      - "${MSSQL_PORT}:${MSSQL_PORT}"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - app_network
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - "${ELASTICSEARCH_PORT}:9200"
+      - "9300:9300"
+    networks:
+      - app_network
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"
+    environment:
+      REDIS_PORT: 6379
+    networks:
+      - app_network
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
+volumes:
+  mssql_data:
+  es_data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge

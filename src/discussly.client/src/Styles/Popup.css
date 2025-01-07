@@ -1,0 +1,39 @@
+.message-dialog-backdrop {
+    position: fixed;
+    top: 20%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    z-index: 1000;
+}
+
+.message-dialog {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.message-dialog-error {
+    background-color: red;
+}
+
+.message-dialog-success {
+    background-color: green;
+}
+
+.message-dialog-close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.message-dialog h3 {
+    color: white;
+}

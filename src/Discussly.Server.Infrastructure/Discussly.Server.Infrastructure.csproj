@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.16.3" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Discussly.Server.Data\Discussly.Server.Data.csproj" />
+    <ProjectReference Include="..\Discussly.Server.SharedKernel\Discussly.Server.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

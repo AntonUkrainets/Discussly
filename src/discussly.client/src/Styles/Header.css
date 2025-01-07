@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.header {
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 70%;
+    margin: 25px auto 25px auto;
+    background-color: white;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.header-container__profile-menu {
+    position: relative;
+}
+
+.header-container__button, .header-container__profile-button, .profile-menu__item {
+    cursor: pointer;
+    font-family: "Open Sans", serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: black;
+}
+
+    .header-container__profile-button.menu-open {
+        background-color: #ccc;
+    }
+
+    .header-container__button:first-child {
+        margin: 0 auto;
+    }
+
+        .header-container__button:first-child:hover {
+            color: #c4c4c4;
+            transition: color 0.2s;
+        }
+
+.header-container__profile-button {
+    padding: 8px;
+    border-radius: 8px;
+    margin-right: 6.5px;
+}
+
+    .header-container__profile-button:hover {
+        background-color: #c4c4c4;
+        transition: background-color 0.2s;
+    }
+
+.profile-menu {
+    position: absolute;
+    right: 6.5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 150px;
+}
+
+.profile-menu__list {
+    list-style: none;
+}
+
+.profile-menu__item {
+    padding: 10px 15px;
+    transition: background-color 0.2s;
+}
+
+    .profile-menu__item:hover {
+        opacity: 0.5;
+    }
